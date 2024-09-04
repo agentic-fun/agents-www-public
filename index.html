@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents Info</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        img {
+            max-width: 150px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h2>AI Agents Information</h2>
+
+<table id="agents-table">
+  <tr>
+    <th>Role</th>
+    <th>Backstory</th>
+    <th>Image</th>
+  </tr>
+</table>
+
+<script>
+    // Fetch the agents.json data
+    fetch('agents.json')
+    .then(response => response.json())
+    .then(data => {
+        const table = document.getElementById('agents-table');
+
+        data.forEach(agent => {
+            const row = document.createElement('tr');
+
+            const roleCell = document.createElement('td');
+            roleCell.textContent = agent.role;
+            row.appendChild(roleCell);
+
+            const backstoryCell = document.createElement('td');
+            backstoryCell.textContent = agent.backstory;
+            row.appendChild(backstoryCell);
+
+            const imgCell = document.createElement('td');
+            const img = document.createElement('img');
+            img.src = `data:image/png;base64,${agent.img_base64}`;
+            img.alt = "Agent Image";
+            imgCell.appendChild(img);
+            row.appendChild(imgCell);
+
+            table.appendChild(row);
+        });
+    })
+    .catch(error => console.error('Error fetching the agents data:', error));
+</script>
+
+</body>
+</html>
